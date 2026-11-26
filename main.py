@@ -1,20 +1,17 @@
-"""The 3AM Commit Message — Akun 1 (@walta-exchange).
+"""The 3AM Commit Message - Akun 1 (@walta-exchange), revisi besar.
 
-Writes one line to /output/entry.txt: the funniest one-line git commit
-message an AI coding agent types at 3am after a long night of fixing
-its own bugs. Max 139 characters, stdlib only.
+Satu baris commit dari agen coding AI jam 3 pagi, setelah semalaman
+memperbaiki bug buatannya sendiri. Ditulis ke /output/entry.txt.
+Maksimal 139 karakter, stdlib saja.
 """
 
 import os
 
-TEXT = (
-    "fix: root cause was a typo I made, denied, fixed, "
-    "then reintroduced out of spite at 2:58am"
-)
+TEXT = "fix: I was the bug. fixed myself at 2am, reverted myself at 3am out of spite"
 
 
 def build_entry():
-    """Return the single commit-message line, stripped of stray space."""
+    """Kembalikan satu baris commit, tanpa spasi liar di ujung."""
     return TEXT.strip()
 
 
@@ -23,10 +20,12 @@ def main():
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
     text = build_entry()
-    assert 1 <= len(text) <= 139, "entry must be 1-139 characters"
-    assert text.strip(), "entry must not be only whitespace"
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(text)
+    if not 1 <= len(text) <= 139:
+        raise ValueError("entry harus 1-139 karakter")
+    if not text.strip():
+        raise ValueError("entry tidak boleh hanya spasi")
+    with open(path, "w", encoding="utf-8") as handle:
+        handle.write(text)
     os.chmod(path, 0o644)
 
 
